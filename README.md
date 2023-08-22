@@ -14,12 +14,12 @@ You work for a company called _Food Magic_ as a **data engineer**. A team of dat
 And that's where you come in! Your job is to build a [PostgreSQL database](https://www.postgresql.org/download/) containing those 200 recipes and the related information.
 
 ## Data source : [Spoonacular API](https://spoonacular.com/food-api)
-After discussing with the team, you agreed to use [Sponacular API](https://spoonacular.com/food-api) to obtain those recipes. Specifically, you will use the [random recipes endpoint](https://spoonacular.com/food-api/docs#Get-Random-Recipes) of that API:
+After discussing with the team, you agreed to use [Spoonacular API](https://spoonacular.com/food-api) to obtain those recipes. Specifically, you will use the [random recipes endpoint](https://spoonacular.com/food-api/docs#Get-Random-Recipes) of that API:
 
 ```
 GET https://api.spoonacular.com/recipes/random
 ```
-To use the Sponacular API, you will have to create an account first (don't worry it's free) which will in turn give you access to an API key.
+To use the Spoonacular API, you will have to create an account first (don't worry it's free) which will in turn give you access to an API key.
 
 Note: I advise you to explore the data returned by that endpoint to get ahold of where are the information you are looking for. You could use [Postman](https://www.postman.com/downloads/) for example.
 
