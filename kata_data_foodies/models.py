@@ -1,17 +1,17 @@
 """Models."""
 
-from sqlalchemy import Table, MetaData, Column, Integer, String, Boolean, ARRAY
+import sqlalchemy
 
-metadata = MetaData()
+metadata = sqlalchemy.MetaData()
 
-recipes = Table(
+recipes = sqlalchemy.Table(
     "recipes",
     metadata,
-    Column("id", Integer, autoincrement=True),
-    Column("recipe_name", String),
-    Column("is_vegetarian", Boolean),
-    Column("is_vegan", Boolean),
-    Column("is_gluten_free", Boolean),
-    Column("instructions", String),
-    Column("ingredients", ARRAY(String)),
+    sqlalchemy.Column("id", sqlalchemy.Integer, autoincrement=True),
+    sqlalchemy.Column("recipe_name", sqlalchemy.String),
+    sqlalchemy.Column("is_vegetarian", sqlalchemy.Boolean),
+    sqlalchemy.Column("is_vegan", sqlalchemy.Boolean),
+    sqlalchemy.Column("is_gluten_free", sqlalchemy.Boolean),
+    sqlalchemy.Column("instructions", sqlalchemy.Text),
+    sqlalchemy.Column("ingredients", sqlalchemy.ARRAY(sqlalchemy.String)),
 )
