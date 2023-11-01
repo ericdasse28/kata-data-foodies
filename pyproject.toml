@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "kata-data-foodies"
+version = "0.1.0"
+description = ""
+authors = ["Eric Dasse <christ.gououi@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "kata_data_foodies"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.31.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.10.1"
+flake8 = "^6.1.0"
+isort = "^5.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
