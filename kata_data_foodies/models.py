@@ -7,7 +7,12 @@ metadata = sqlalchemy.MetaData()
 recipes = sqlalchemy.Table(
     "recipes",
     metadata,
-    sqlalchemy.Column("id", sqlalchemy.Integer, autoincrement=True),
+    sqlalchemy.Column(
+        "id",
+        sqlalchemy.Integer,
+        autoincrement=True,
+        primary_key=True,
+    ),
     sqlalchemy.Column("recipe_name", sqlalchemy.String),
     sqlalchemy.Column("is_vegetarian", sqlalchemy.Boolean),
     sqlalchemy.Column("is_vegan", sqlalchemy.Boolean),
