@@ -1,10 +1,12 @@
 """Spoonacular ETL"""
 
 from dotenv import load_dotenv
+from loguru import logger
 import requests
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, insert
 from kata_data_foodies import config
 from typing import List, Dict
+from kata_data_foodies.models import recipes
 
 
 def extract():
@@ -57,17 +59,7 @@ def load(transformed_recipes: List[Dict]):
 
     with engine.connect() as connection:
         for transformed_recipe in transformed_recipes:
-            recipe_insert_stmt = text(
-                """
-                INSERT INTO recipes
-                (id, recipe_name, is_vegetarian, is_vegan, is_gluten_free,
-                instructions, ingredients)
-                VALUES (:id, :recipe_name, :is_vegetarian, :is_vegan,
-                :is_gluten_free, :instructions, array[:ingredients])
-"""
-            )
-            connection.execute(
-                recipe_insert_stmt,
+            recipe_insert_stmt = insert(recipes).values(
                 recipe_name=transformed_recipe["recipe_name"],
                 is_vegetarian=transformed_recipe["is_vegetarian"],
                 is_vegan=transformed_recipe["is_vegan"],
@@ -75,13 +67,17 @@ def load(transformed_recipes: List[Dict]):
                 instructions=transformed_recipe["instructions"],
                 ingredients=transformed_recipe["ingredients"],
             )
+            connection.execute(recipe_insert_stmt)
 
 
 def main():
     """Main."""
 
+    logger.info("Acquiring data from Spoonacular API")
     recipes = extract()
+    logger.info("Transformation...")
     transformed_recipes = transform(recipes)
+    logger.info("Loading")
     load(transformed_recipes)
 
 
