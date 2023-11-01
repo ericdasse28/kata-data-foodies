@@ -14,7 +14,10 @@ def extract():
         "https://api.spoonacular.com/recipes/random?number=200",
         params={"apiKey": config.SPOONACULAR_API_KEY},
     )
-    recipes = response.json()["recipes"]
+    if response.status_code == 200:
+        recipes = response.json()["recipes"]
+    else:
+        raise Exception("The request failed!")
 
     return recipes
 
