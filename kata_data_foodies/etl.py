@@ -80,12 +80,12 @@ def load(transformed_recipes: List[Dict]):
 def main():
     """Main."""
 
-    load_dotenv()
-
     recipes = extract()
     transformed_recipes = transform(recipes)
     load(transformed_recipes)
 
 
 if __name__ == "__main__":
+    load_dotenv()
+
     main()
