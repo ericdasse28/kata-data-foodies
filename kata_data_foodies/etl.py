@@ -80,6 +80,8 @@ def main():
     logger.info("Loading")
     load(transformed_recipes)
 
+    logger.success("ETL successful!")
+
 
 if __name__ == "__main__":
     load_dotenv()
