@@ -1,10 +1,11 @@
 """Spoonacular ETL"""
 
+import os
 from dotenv import load_dotenv
 from loguru import logger
 import requests
 from sqlalchemy import create_engine, insert
-from kata_data_foodies import config
+import sqlalchemy
 from typing import List, Dict
 from kata_data_foodies.models import recipes
 
@@ -12,9 +13,11 @@ from kata_data_foodies.models import recipes
 def extract():
     """Extract."""
 
+    spoonacular_api_key = os.environ["SPOONACULAR_API_KEY"]
+
     response = requests.get(
         "https://api.spoonacular.com/recipes/random?number=200",
-        params={"apiKey": config.SPOONACULAR_API_KEY},
+        params={"apiKey": spoonacular_api_key},
     )
     if response.status_code == 200:
         recipes = response.json()["recipes"]
@@ -47,11 +50,25 @@ def transform(recipes: List[Dict]) -> List[Dict]:
     return transformed_recipes
 
 
+def make_sqlalchemy_db_url():
+    """Make SQLAlchemy DB URL."""
+
+    db_url = sqlalchemy.URL.create(
+        drivername="postgresql",
+        username=os.environ["DB_USER"],
+        password=os.environ["DB_PASSWORD"],
+        host=os.environ["DB_HOST"],
+        port=os.environ["DB_PORT"],
+        database=os.environ["DB_NAME"],
+    )
+
+    return db_url
+
+
 def load(transformed_recipes: List[Dict]):
     """Load."""
 
-    db_url = f"postgresql+psycopg2://{config.DB_USER}:{config.DB_PASSWORD}@\
-{config.DB_HOST}:{config.DB_PORT}/recipe_db"
+    db_url = make_sqlalchemy_db_url()
     engine = create_engine(
         db_url,
         execution_options={"isolation_level": "AUTOCOMMIT"},
