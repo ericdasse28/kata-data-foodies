@@ -5,9 +5,9 @@ from dotenv import load_dotenv
 from loguru import logger
 import requests
 from sqlalchemy import create_engine, insert
-import sqlalchemy
 from typing import List, Dict
 from kata_data_foodies.models import recipes
+from kata_data_foodies.utils import make_sqlalchemy_db_url
 
 
 def extract():
@@ -48,21 +48,6 @@ def transform(recipes: List[Dict]) -> List[Dict]:
         )
 
     return transformed_recipes
-
-
-def make_sqlalchemy_db_url():
-    """Make SQLAlchemy DB URL."""
-
-    db_url = sqlalchemy.URL.create(
-        drivername="postgresql",
-        username=os.environ["DB_USER"],
-        password=os.environ["DB_PASSWORD"],
-        host=os.environ["DB_HOST"],
-        port=os.environ["DB_PORT"],
-        database=os.environ["DB_NAME"],
-    )
-
-    return db_url
 
 
 def load(transformed_recipes: List[Dict]):
